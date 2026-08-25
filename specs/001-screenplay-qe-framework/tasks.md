@@ -205,32 +205,33 @@ FR-014).
 **Independent Test** (spec.md US4): Identify a Task or Question used by more than one
 demonstration scenario and confirm no duplicate implementation exists for it.
 
-- [ ] T028 [P] [US2] Implement `CompleteItem` Task in `src/tasks/CompleteItem.ts` (composes
-  `Click.on(todoItemCheckbox)` from `@serenity-js/web`) — the "equivalent second UI Task" named
-  in data-model.md
-- [ ] T029 [P] [US2] Implement `ItemCompletionState` Question in
-  `src/questions/ItemCompletionState.ts` (returns whether a named todo item is marked
-  complete) — FR-006
-- [ ] T030 [US2] Implement the second UI scenario test in `tests/ui/complete-item.spec.ts`:
+- [X] T028 [P] [US2] Implement `CompleteItem` Task in `src/tasks/CompleteItem.ts` (composes
+  `Click.on(todoItemCheckbox)` from `@serenity-js/web`, located via
+  `By.css('.toggle').of(By.cssContainingText('li', itemName))`) — the "equivalent second UI
+  Task" named in data-model.md
+- [X] T029 [P] [US2] Implement `ItemCompletionState` Question in
+  `src/questions/ItemCompletionState.ts` (`Question.about` reading `CssClasses.of(...)` on the
+  named item's `<li>` and checking for the `completed` class) — FR-006
+- [X] T030 [US2] Implement the second UI scenario test in `tests/ui/complete-item.spec.ts`:
   Actor reuses `OpenApplication` + `AddItemToList('Walk the dog')` (same implementations as
   T023, not duplicated), then performs `CompleteItem('Walk the dog')`, then
-  `Ensure.that(ItemCompletionState.of('Walk the dog'), isTrue())` (depends on T028, T029, and
+  `Ensure.that(ItemCompletionState('Walk the dog'), isTrue())` (depends on T028, T029, and
   T023's Tasks existing)
-- [ ] T031 [P] [US3] Implement `CreatePost` Task in `src/tasks/CreatePost.ts` (composes
+- [X] T031 [P] [US3] Implement `CreatePost` Task in `src/tasks/CreatePost.ts` (composes
   `Send.a(PostRequest.to('/posts').with({ title, body, userId }))` from `@serenity-js/rest`) —
   the second API Task named in data-model.md
-- [ ] T032 [US3] Implement the second API scenario test in `tests/api/create-post.spec.ts`:
+- [X] T032 [US3] Implement the second API scenario test in `tests/api/create-post.spec.ts`:
   Actor performs `CreatePost(...)`, then `Ensure.that(LastResponse.status(), equals(201))` and
-  `Ensure.that(LastResponse.body<{ title: string }>(), property('title', equals(...)))` (reuses
-  the same `LastResponse` Question pattern as T026, not a duplicate) (depends on T031)
-- [ ] T033 [US4] Verify the reusable Task demonstration: confirm `OpenApplication` (and
-  `AddItemToList`, where reused for setup) is invoked, unchanged, from both
-  `tests/ui/add-item.spec.ts` and `tests/ui/complete-item.spec.ts` with a single implementation
-  in `src/tasks/` — no code changes, inspection/quickstart.md Step 8 (depends on T023, T030)
-- [ ] T034 [US4] Verify the reusable Question demonstration: confirm the built-in
-  `LastResponse` Questions are used, unchanged, from both `tests/api/get-post.spec.ts` and
-  `tests/api/create-post.spec.ts` (and/or `ListItemNames`/`ItemCompletionState` reuse within
-  `tests/ui/`) — no code changes, inspection/quickstart.md Step 8 (depends on T026, T032)
+  `Ensure.that(LastResponse.body<Post>().title, equals(...))` (reuses the same
+  `LastResponse.body<T>()` proxied-property pattern as T026, not a duplicate) (depends on T031)
+- [X] T033 [US4] Verified the reusable Task demonstration: `OpenApplication` and
+  `AddItemToList` are invoked, unchanged, from both `tests/ui/add-item.spec.ts` and
+  `tests/ui/complete-item.spec.ts` with a single implementation in `src/tasks/` — confirmed via
+  `grep` inspection, no code changes (depends on T023, T030)
+- [X] T034 [US4] Verified the reusable Question demonstration: the built-in `LastResponse`
+  Questions are used, unchanged, from both `tests/api/get-post.spec.ts` and
+  `tests/api/create-post.spec.ts` — confirmed via `grep` inspection, no code changes (depends
+  on T026, T032)
 
 **Checkpoint**: All 4 demonstration scenarios (2 UI + 2 API) pass; reuse is demonstrated, not
 just asserted in documentation (FR-014 satisfied).
