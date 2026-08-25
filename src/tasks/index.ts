@@ -4,3 +4,4 @@
 // Ability or a low-level client directly (src/abilities/).
 export * from './OpenApplication';
 export * from './AddItemToList';
+export * from './GetPost';

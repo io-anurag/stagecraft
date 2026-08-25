@@ -178,16 +178,18 @@ channel/Ability) — **may be implemented in parallel with Phase 4** once Phase 
 **Independent Test** (spec.md US3): Run the API demonstration scenario and observe requests
 executed and responses evaluated independently of any browser.
 
-- [ ] T025 [US3] Implement `GetPost` Task in `src/tasks/GetPost.ts` (composes
-  `Send.a(GetRequest.to('/posts/1'))` from `@serenity-js/rest`) — FR-004, FR-005
-- [ ] T026 [US3] Implement the first API scenario test in `tests/api/get-post.spec.ts`: Actor
-  performs `GetPost`, then `Ensure.that(LastResponse.status(), equals(200))` and
-  `Ensure.that(LastResponse.body<{ id: number }>(), property('id', equals(1)))` (uses
-  `@serenity-js/rest`'s built-in `LastResponse` Questions directly — no custom wrapper Question,
-  per Constitution Principle X) (depends on T025)
-- [ ] T027 [US3] Verify scenario 1 end-to-end: run `npm run test:api`, confirm the scenario
-  passes and a Serenity/JS report entry is produced before starting Phase 6 API work (depends
-  on T026)
+- [X] T025 [US3] Implement `GetPost` Task in `src/tasks/GetPost.ts` (composes
+  `Send.a(GetRequest.to('/posts/{id}'))` from `@serenity-js/rest`, parameterised by post id) —
+  FR-004, FR-005
+- [X] T026 [US3] Implement the first API scenario test in `tests/api/get-post.spec.ts`: Actor
+  performs `GetPost(1)`, then `Ensure.that(LastResponse.status(), equals(200))` and
+  `Ensure.that(LastResponse.body<Post>().id, equals(1))`. **Note**: used `LastResponse.body<Post>()`'s
+  proxied property access directly rather than the `property(...)` matcher — it's the pattern
+  shown in `@serenity-js/rest`'s own docs and needs no extra import (Constitution Principle X)
+  (depends on T025)
+- [X] T027 [US3] Verify scenario 1 end-to-end: ran `npm run test:api`, scenario passes (Actor
+  sends GET request, status and body assertions pass) and a Serenity/JS report entry is
+  produced (depends on T026)
 
 **Checkpoint**: First API scenario passes and reports — proves the pattern works beyond the
 browser channel (US3 independent test satisfied).
