@@ -77,16 +77,16 @@ trivially succeeds).
 **Purpose**: Wire Playwright Test + Serenity/JS together with reporting, and prove one
 executable test round-trips before any Screenplay abstractions exist.
 
-- [ ] T009 Create `playwright.config.ts`: `testDir: './tests'`, two `projects` entries
+- [X] T009 Create `playwright.config.ts`: `testDir: './tests'`, two `projects` entries
   (`ui`, `api`) pointing at `tests/ui` and `tests/api`, `use.baseURL` from
   `src/config/env.ts` (depends on T004, T006)
-- [ ] T010 Configure Serenity/JS test execution in `playwright.config.ts`: import
+- [X] T010 Configure Serenity/JS test execution in `playwright.config.ts`: import
   `@serenity-js/playwright-test`'s `test`/`defineConfig` helpers so the `actorCalled` fixture
   is available in spec files (depends on T009)
-- [ ] T011 Configure reporting in `playwright.config.ts`: register `@serenity-js/console-reporter`
+- [X] T011 Configure reporting in `playwright.config.ts`: register `@serenity-js/console-reporter`
   and `@serenity-js/html-reporter` (with `Photographer` `strategy: 'TakePhotosOfFailures'`) as
   the Serenity/JS stage crew, output directory `reports/serenity-js/` (depends on T010)
-- [ ] T012 Verify a minimal executable test: `tests/ui/_smoke.spec.ts` — an inline
+- [X] T012 Verify a minimal executable test: `tests/ui/_smoke.spec.ts` — an inline
   `actorCalled('Alice').whoCan(BrowseTheWebWithPlaywright.using(browser))` navigates to
   `BASE_URL` and asserts the page loads (`Ensure.that(Page.current().title(), not(equals('')))`
   );run `npm run test:ui` and confirm a report is written to `reports/serenity-js/` (depends on
