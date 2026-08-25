@@ -103,27 +103,32 @@ end-to-end before any business Tasks are written.
 Per Constitution Principle X, this is intentionally thin — no generic base classes, no
 factories/DI beyond what Serenity/JS already provides.
 
-- [ ] T013 [P] Implement Actor setup: `src/actors/Actors.ts` — a `Cast` (extends
-  `@serenity-js/core`'s `Cast`) whose `prepare(actor)` assigns `BrowseTheWebWithPlaywright`
-  (UI) or `CallAnApi` (API) based on which channel invokes it, so `tests/ui/*` and
-  `tests/api/*` obtain a ready-to-use `actorCalled('Alice')` without repeating Ability wiring
-- [ ] T014 [P] Configure browser Ability: `src/abilities/browseTheWeb.ts` — a single
-  `browseTheWebAbility(page)` factory wrapping `BrowseTheWebWithPlaywright.using(...)`,
-  reading `HEADLESS` from `src/config/env.ts`; no direct `Page`/`Browser` construction outside
-  this file (data-model.md Ability validation rule)
-- [ ] T015 [P] Configure API Ability: `src/abilities/callAnApi.ts` — a single
-  `callAnApiAbility()` factory wrapping `CallAnApi.at(env.API_BASE_URL)`; no direct HTTP client
-  construction outside this file
-- [ ] T016 [P] Establish Task conventions: `src/tasks/index.ts` barrel file with a short header
+- [X] T013 [P] Implement Actor setup: `src/actors/actors.ts`. **Deviation from original plan**:
+  Serenity/JS's default Playwright Test actor cast already assigns `BrowseTheWebWithPlaywright`
+  (bound to the `page` fixture) and `CallAnApi` (bound to the project's `baseURL`) to every
+  actor automatically — a custom `Cast` subclass would only reimplement that (Constitution
+  Principle X). `actors.ts` instead exports `DEFAULT_ACTOR_NAME`, wired into
+  `playwright.config.ts`'s `defaultActorName`, so the actor's name is declared in one place
+- [X] T014 [P] Configure browser Ability: **merged into T015's `src/abilities/index.ts`**. No
+  factory wrapper is needed — the default cast already provides `BrowseTheWebWithPlaywright`
+  bound to Playwright Test's `page`/`headless` config, so there is no direct `Page`/`Browser`
+  construction anywhere in `src/` to wrap (data-model.md Ability validation rule satisfied
+  trivially)
+- [X] T015 [P] Configure API Ability: `src/abilities/index.ts` documents that `CallAnApi` also
+  comes from the default cast (bound to the project's `baseURL`); no custom factory or direct
+  HTTP client construction exists outside this documented decision
+- [X] T016 [P] Establish Task conventions: `src/tasks/index.ts` barrel file with a header
   comment (Tasks represent business intent, `performAs(actor)`, composed of Interactions/other
-  Tasks only, no low-level operations — Constitution Principle II)
-- [ ] T017 [P] Establish Interaction conventions: `src/interactions/index.ts` barrel file with a
+  Tasks only, no low-level operations — Constitution Principle II); re-exports `OpenApplication`
+  and `AddItemToList` added in Phase 4
+- [X] T017 [P] Establish Interaction conventions: `src/interactions/index.ts` barrel file with a
   header comment (only add an Interaction here when no `@serenity-js/web`/`@serenity-js/rest`
-  primitive covers the need — Constitution Principle X)
-- [ ] T018 [P] Establish Question conventions: `src/questions/index.ts` barrel file with a
+  primitive covers the need — Constitution Principle X); no custom Interaction has been needed
+- [X] T018 [P] Establish Question conventions: `src/questions/index.ts` barrel file with a
   header comment (Questions are read-only, answered via `actor.answer(...)` or inline in
-  `Ensure.that(...)`, reusable across scenarios — FR-014)
-- [ ] T019 [P] Establish assertion conventions: `tests/README.md` — short shared note for both
+  `Ensure.that(...)`, reusable across scenarios — FR-014); re-exports `ListItemNames` added in
+  Phase 4
+- [X] T019 [P] Establish assertion conventions: `tests/README.md` — short shared note for both
   `tests/ui/` and `tests/api/` stating all scenario assertions MUST use
   `Ensure.that(question, expectation)` from `@serenity-js/assertions`, never a framework-native
   assertion (e.g., raw Playwright `expect(locator)`) that bypasses the Screenplay model
@@ -141,20 +146,24 @@ chain for a real UI scenario against TodoMVC.
 **Independent Test** (spec.md US2): Run the UI demonstration scenario and observe the browser
 driven end-to-end with a reported pass/fail outcome.
 
-- [ ] T020 [P] [US2] Implement `OpenApplication` Task in `src/tasks/OpenApplication.ts`
-  (composes `Navigate.to(env.BASE_URL)` from `@serenity-js/web`) — FR-004
-- [ ] T021 [P] [US2] Implement `AddItemToList` Task in `src/tasks/AddItemToList.ts` (composes
-  `Enter.theValue(text).into(newTodoInput)` + `Press.the('Enter').in(newTodoInput)` from
+- [X] T020 [P] [US2] Implement `OpenApplication` Task in `src/tasks/OpenApplication.ts`
+  (composes `Navigate.to(env.baseUrl)` from `@serenity-js/web`) — FR-004. **Note**:
+  `Navigate.to(env.baseUrl)` (absolute) is used rather than `Navigate.to('/')` — a
+  root-relative path resolves against the *origin* of the project's `baseURL`, which would
+  silently drop the `/examples/react/dist/` path segment and load the wrong page
+- [X] T021 [P] [US2] Implement `AddItemToList` Task in `src/tasks/AddItemToList.ts` (composes
+  `Enter.theValue(text).into(newTodoInput)` + `Press.the(Key.Enter).in(newTodoInput)` from
   `@serenity-js/web`) — FR-004, FR-005
-- [ ] T022 [P] [US2] Implement `ListItemNames` Question in `src/questions/ListItemNames.ts`
-  (returns the visible todo item labels as `Question<Promise<string[]>>`) — FR-006
-- [ ] T023 [US2] Implement the first UI scenario test in `tests/ui/add-item.spec.ts`: Actor
+- [X] T022 [P] [US2] Implement `ListItemNames` Question in `src/questions/ListItemNames.ts`
+  (`PageElements.located(By.css('.todo-list li label')).eachMappedTo(Text)`, the visible todo
+  item labels) — FR-006
+- [X] T023 [US2] Implement the first UI scenario test in `tests/ui/add-item.spec.ts`: Actor
   performs `OpenApplication` then `AddItemToList('Buy milk')`, then
-  `Ensure.that(ListItemNames.displayed(), includes('Buy milk'))` (depends on T020–T022; delete
-  `tests/ui/_smoke.spec.ts` from T012 as part of this task)
-- [ ] T024 [US2] Verify scenario 1 end-to-end: run `npm run test:ui`, confirm the scenario
-  passes and a Serenity/JS report entry is produced before starting Phase 5/6 UI work (depends
-  on T023)
+  `Ensure.that(ListItemNames(), containAtLeastOneItemThat(equals('Buy milk')))` (depends on
+  T020–T022; deleted `tests/ui/_smoke.spec.ts` from T012 as part of this task)
+- [X] T024 [US2] Verify scenario 1 end-to-end: ran `npm run test:ui`, scenario passes (Actor
+  navigates, enters value, presses Enter, assertion passes) and a Serenity/JS report entry is
+  produced (depends on T023)
 
 **Checkpoint**: First UI scenario passes and reports — proves the pattern for the UI channel.
 

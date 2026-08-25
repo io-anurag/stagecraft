@@ -2,6 +2,7 @@ import { defineConfig } from '@playwright/test';
 import type { PlaywrightTestConfig, SerenityFixtures, SerenityWorkerFixtures } from '@serenity-js/playwright-test';
 import { Photographer, TakePhotosOfFailures } from '@serenity-js/web';
 
+import { DEFAULT_ACTOR_NAME } from './src/actors/actors';
 import { env } from './src/config/env';
 
 // Single Playwright Test config serves both the UI and API channels (FR-010) —
@@ -23,6 +24,7 @@ const config: PlaywrightTestConfig<SerenityFixtures, SerenityWorkerFixtures> = {
             Photographer.whoWill(TakePhotosOfFailures),
         ],
         headless: env.headless,
+        defaultActorName: DEFAULT_ACTOR_NAME,
     },
 
     projects: [
