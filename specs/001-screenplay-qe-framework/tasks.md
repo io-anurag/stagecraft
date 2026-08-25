@@ -278,26 +278,26 @@ correctly describes the Actor and business goal without opening Interaction code
 
 All tasks below edit the same file sequentially (no `[P]`):
 
-- [ ] T039 [US1] Write README.md purpose & architecture overview section in `README.md`
+- [X] T039 [US1] Write README.md purpose & architecture overview section in `README.md`
   (what StageCraft is, why Serenity/JS, link to constitution.md)
-- [ ] T040 [US1] Write README.md Screenplay concepts section in `README.md` (Actor, Ability,
+- [X] T040 [US1] Write README.md Screenplay concepts section in `README.md` (Actor, Ability,
   Task, Interaction, Question, Assertion, Execution Report — one paragraph each, referencing
   `data-model.md`'s definitions and their `src/` locations)
-- [ ] T041 [US1] Write README.md project structure section in `README.md` (folder tree mirrored
+- [X] T041 [US1] Write README.md project structure section in `README.md` (folder tree mirrored
   from plan.md's Project Structure)
-- [ ] T042 [US1] Write README.md UI example walkthrough in `README.md` (annotated excerpt of
+- [X] T042 [US1] Write README.md UI example walkthrough in `README.md` (annotated excerpt of
   `tests/ui/add-item.spec.ts` explaining each Screenplay step)
-- [ ] T043 [US1] Write README.md API example walkthrough in `README.md` (annotated excerpt of
+- [X] T043 [US1] Write README.md API example walkthrough in `README.md` (annotated excerpt of
   `tests/api/get-post.spec.ts`)
-- [ ] T044 [US1] Write README.md data flow section in `README.md` (Actor → Ability → Task →
+- [X] T044 [US1] Write README.md data flow section in `README.md` (Actor → Ability → Task →
   Interaction → System Under Test → Question → Assertion → Execution Report, as a mermaid
   diagram)
-- [ ] T045 [US1] Write README.md execution commands section in `README.md` (`npm install`,
+- [X] T045 [US1] Write README.md execution commands section in `README.md` (`npm install`,
   `npx playwright install chromium`, `npm run build`, `npm run test:ui`, `npm run test:api`,
   `npm test`, `npm run report`)
-- [ ] T046 [US1] Write README.md reporting section in `README.md` (how to read the HTML report,
+- [X] T046 [US1] Write README.md reporting section in `README.md` (how to read the HTML report,
   where screenshots appear on failure)
-- [ ] T047 [US1] Write README.md scalability section in `README.md` (how a new interaction
+- [X] T047 [US1] Write README.md scalability section in `README.md` (how a new interaction
   channel, e.g. database or messaging, would add a new Ability + Interaction set without
   redesigning Actor/Task/Question — Constitution Principle XI, SC-007)
 
