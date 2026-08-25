@@ -1,0 +1,29 @@
+node_modules/
+dist/
+
+# Serenity/JS + Playwright generated output
+reports/serenity-js/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Environment
+.env
+.env.local
+
+# Logs
+npm-debug.log*
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+
+.github/
+.qodo/
+.specify/
