@@ -1,13 +1,9 @@
-export interface StageCraftEnv {
-    baseUrl: string;
-    apiBaseUrl: string;
-    headless: boolean;
-}
+import { StageCraftEnv } from './StageCraftEnv';
 
 const DEFAULT_BASE_URL = 'https://todomvc.com/examples/react/dist/';
 const DEFAULT_API_BASE_URL = 'https://jsonplaceholder.typicode.com';
 
-// Centralised so no Task/Ability reads process.env directly (FR-015, Constitution Principle V).
+/** Reads environment configuration from `process.env`, applying defaults for unset values. */
 export function loadEnv(): StageCraftEnv {
     return {
         baseUrl: process.env.BASE_URL ?? DEFAULT_BASE_URL,

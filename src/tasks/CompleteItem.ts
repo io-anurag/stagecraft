@@ -6,7 +6,7 @@ const todoItemCheckbox = (itemName: string) =>
         .of(PageElement.located(By.cssContainingText('li', itemName)))
         .describedAs(`the '${itemName}' checkbox`);
 
-// Business intent: mark an existing list item as done (FR-004, FR-005).
+/** Marks the named list item as complete. */
 export const CompleteItem = (itemName: string) =>
     Task.where(`#actor completes '${itemName}'`,
         Click.on(todoItemCheckbox(itemName)),
