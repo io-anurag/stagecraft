@@ -37,34 +37,34 @@ Single project, per plan.md Project Structure:
 **Purpose**: A compilable, dependency-installed, environment-aware project skeleton. Nothing
 here is Screenplay-specific yet.
 
-- [ ] T001 Create the directory skeleton per plan.md Project Structure:
+- [X] T001 Create the directory skeleton per plan.md Project Structure:
   `src/actors/`, `src/abilities/`, `src/tasks/`, `src/interactions/`, `src/questions/`,
   `src/config/`, `tests/ui/`, `tests/api/` (each with a `.gitkeep` if empty)
-- [ ] T002 Initialize `package.json` (`npm init -y`, then set `name: "stagecraft"`,
+- [X] T002 Initialize `package.json` (`npm init -y`, then set `name: "stagecraft"`,
   `private: true`, `description`, `license`) in `package.json`
-- [ ] T003 Install pinned dependencies in `package.json` / `package-lock.json`:
+- [X] T003 Install pinned dependencies in `package.json` / `package-lock.json`:
   production/runtime — `@serenity-js/core@^3.45.9`, `@serenity-js/web@^3.45.9`,
   `@serenity-js/playwright@^3.45.9`, `@serenity-js/playwright-test@^3.45.9`,
   `@serenity-js/rest@^3.45.9`, `@serenity-js/assertions@^3.45.9`,
   `@serenity-js/console-reporter@^3.45.9`, `@serenity-js/html-reporter@^3.45.9`,
   `@playwright/test@^1.62.1`; dev — `typescript@^5.9.3`, `@types/node` (matching Node
   `^22.22.2`)
-- [ ] T004 [P] Configure strict TypeScript in `tsconfig.json`: `"strict": true`,
+- [X] T004 [P] Configure strict TypeScript in `tsconfig.json`: `"strict": true`,
   `"module": "commonjs"`, `"moduleResolution": "node"`, `"target": "ES2022"`,
   `"outDir": "dist"`, `"rootDir": "."`, `include` covering `src/**/*` and `tests/**/*`
   (CommonJS chosen to match `@playwright/test`'s default TS loading with no extra ESM config)
-- [ ] T005 Configure npm scripts in `package.json` (depends on T003): `"build": "tsc --noEmit"`,
+- [X] T005 Configure npm scripts in `package.json` (depends on T003): `"build": "tsc --noEmit"`,
   `"test:ui": "playwright test tests/ui"`, `"test:api": "playwright test tests/api"`,
   `"test": "playwright test"`, `"report": "serenity-bdd run"` replaced with the html-reporter
   open command (e.g. `"report": "open reports/serenity-js/index.html"`-equivalent
   cross-platform opener, or simply document the generated path if no opener package is added)
-- [ ] T006 [P] Configure environment handling: `src/config/env.ts` (reads `BASE_URL`,
+- [X] T006 [P] Configure environment handling: `src/config/env.ts` (reads `BASE_URL`,
   `API_BASE_URL`, `HEADLESS` from `process.env` with safe defaults) and `.env.example`
   (`BASE_URL=https://todomvc.com/examples/react/dist/`,
   `API_BASE_URL=https://jsonplaceholder.typicode.com`, `HEADLESS=true`)
-- [ ] T007 [P] Configure `.gitignore` at repo root: `node_modules/`, `dist/`,
+- [X] T007 [P] Configure `.gitignore` at repo root: `node_modules/`, `dist/`,
   `reports/serenity-js/`, `test-results/`, `.env`
-- [ ] T008 Verify clean install: run `npm install`, `npx playwright install chromium`, confirm
+- [X] T008 Verify clean install: run `npm install`, `npx playwright install chromium`, confirm
   exit code 0 for both (depends on T001–T007)
 
 **Checkpoint**: Project installs cleanly and compiles (no source files yet, so `npm run build`
