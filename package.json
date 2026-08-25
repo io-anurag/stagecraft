@@ -1,0 +1,43 @@
+{
+  "name": "stagecraft",
+  "version": "1.0.0",
+  "private": true,
+  "description": "StageCraft is a lightweight, extensible test automation framework built with TypeScript, Playwright, and Serenity/JS, designed to demonstrate and validate the Screenplay Pattern across UI and API testing.",
+  "engines": {
+    "node": "^22.22.2 || ^24.15.0"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "test:ui": "playwright test tests/ui",
+    "test:api": "playwright test tests/api",
+    "test": "playwright test",
+    "report": "html-reporter serve --dir reports/serenity-js --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/io-anurag/stagecraft.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/io-anurag/stagecraft/issues"
+  },
+  "homepage": "https://github.com/io-anurag/stagecraft#readme",
+  "dependencies": {
+    "@playwright/test": "1.62.1",
+    "@serenity-js/assertions": "3.45.9",
+    "@serenity-js/console-reporter": "3.45.9",
+    "@serenity-js/core": "3.45.9",
+    "@serenity-js/html-reporter": "3.45.9",
+    "@serenity-js/playwright": "3.45.9",
+    "@serenity-js/playwright-test": "3.45.9",
+    "@serenity-js/rest": "3.45.9",
+    "@serenity-js/web": "3.45.9"
+  },
+  "devDependencies": {
+    "@types/node": "22.18.10",
+    "typescript": "5.9.3"
+  }
+}
