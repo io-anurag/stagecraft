@@ -3,10 +3,7 @@ import { it } from '@serenity-js/playwright-test';
 import { LastResponse } from '@serenity-js/rest';
 
 import { GetPost } from '../../src/tasks';
-
-interface Post {
-    id: number;
-}
+import { Post } from '../../src/types/Post';
 
 it('retrieves a post', async ({ actor }) => {
     await actor.attemptsTo(

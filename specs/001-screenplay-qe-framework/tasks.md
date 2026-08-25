@@ -313,32 +313,46 @@ checkout (US6), and confirm alignment with the constitution, spec, and plan.
 **Independent Test** (spec.md US6): From a clean environment, following only documented
 commands, install → execute → report with no undocumented manual steps.
 
-- [ ] T048 [US6] Verify strict TypeScript compilation: `npm run build` exits 0 with zero errors
-  (depends on Phase 6 complete)
-- [ ] T049 Verify lint/static checks: this project has no separate linter configured — `tsc
-  --strict` (T048) is the static check; note this explicitly if a linter is added later
-- [ ] T050 [US6] Run UI test execution: `npm run test:ui` — both UI scenarios pass (depends on
-  T048)
-- [ ] T051 [US6] Run API test execution: `npm run test:api` — both API scenarios pass (depends
-  on T048)
-- [ ] T052 [US6] Run complete suite execution: `npm test` — all 4 scenarios pass in one run/one
-  report (depends on T050, T051)
-- [ ] T053 [US6] Generate the final execution report: `npm run report`, manually confirm it
-  lists scenario/Actor/Tasks/Interactions/Questions/Assertions/outcome for all 4 scenarios
-  (depends on T052)
-- [ ] T054 [US6] Clean installation validation: delete `node_modules/`, `dist/`,
-  `reports/serenity-js/`, `test-results/`; re-run `npm install`,
-  `npx playwright install chromium`, `npm run build`, `npm test`, `npm run report` from that
+- [X] T048 [US6] Verified strict TypeScript compilation: `npm run build` (`tsc --noEmit`) exits
+  0 with zero errors (depends on Phase 6 complete)
+- [X] T049 Verified lint/static checks: confirmed no separate linter is configured (no
+  `.eslintrc*`/`eslint.config.*` in the repo) — `tsc --strict` (T048) is the project's only
+  static check; revisit this task if a linter is added later
+- [X] T050 [US6] Ran UI test execution: `npm run test:ui` — both UI scenarios
+  (`add-item.spec.ts`, `complete-item.spec.ts`) pass (depends on T048)
+- [X] T051 [US6] Ran API test execution: `npm run test:api` — both API scenarios
+  (`get-post.spec.ts`, `create-post.spec.ts`) pass (depends on T048)
+- [X] T052 [US6] Ran complete suite execution: `npm test` — all 4 scenarios pass in one
+  run/one report (`reports/serenity-js/summary.json`: `passed: 4, failed: 0`) (depends on
+  T050, T051)
+- [X] T053 [US6] Generated the final execution report: `npm run report` served
+  `reports/serenity-js/`; console reporter output and `summary.json` confirmed for all 4
+  scenarios (depends on T052)
+- [X] T054 [US6] Clean installation validation: deleted `node_modules/`, `dist/`,
+  `reports/serenity-js/`, `test-results/`; re-ran `npm install` (0 vulnerabilities, only
+  expected non-blocking `EBADENGINE` warnings for Node v22.17.1 vs. the `^22.22.2 || ^24.15.0`
+  range), `npx playwright install chromium`, `npm run build` (0 errors), `npm test` (4/4
+  pass), `npm run report` (served successfully at `http://localhost:8080`) — all from a fully
   clean state (quickstart.md Steps 1–7) (depends on T053)
-- [ ] T055 [P] Verify no secrets committed: confirm `.env` is git-ignored, only `.env.example`
-  (public defaults) is tracked, `git status`/`git diff` show no credential-like values
-- [ ] T056 [P] Verify constitution compliance: re-check plan.md's Constitution Check table
-  (Principles I–XIV) against the final `src/`/`tests/` implementation, note any drift in
-  `plan.md` if found
-- [ ] T057 [P] Verify specification coverage: cross-reference `spec.md`'s FR-001–FR-015,
-  NFR-001–NFR-006, and SC-001–SC-008 against the implementation, confirming each is satisfied
-- [ ] T058 [P] Verify plan/task alignment: confirm this `tasks.md` fully implements `plan.md`'s
-  Project Structure and Technical Context with no unplanned deviations
+- [X] T055 [P] Verified no secrets committed: `.gitignore` contains `.env`/`.env.local`;
+  `git check-ignore -v .env` confirms the pattern is active; `git ls-files | Select-String
+  '\.env'` shows only `.env.example` (public defaults, no credentials) is tracked; `git
+  status --porcelain` is clean
+- [X] T056 [P] Verified constitution compliance: re-checked plan.md's Constitution Check
+  table (Principles I–XIV) against the final `src/`/`tests/` implementation — folder
+  structure (`src/{actors,abilities,tasks,interactions,questions,config}/`) matches exactly,
+  function-based `Task.where`/`Question.about` factories satisfy Principles I/II/IV/V/X, no
+  drift found, no `plan.md` update needed
+- [X] T057 [P] Verified specification coverage: cross-referenced `spec.md`'s FR-001–FR-015,
+  NFR-001–NFR-006, and SC-001–SC-008 against the implementation — all 29 satisfied (2 UI + 2
+  API scenarios satisfy FR-008/FR-009/SC-002/SC-003; shared Actor/Task/Question model across
+  channels satisfies FR-010/SC-005; reused `OpenApplication`/`AddItemToList`/`LastResponse`
+  satisfy FR-014/SC-007; single-command install→test→report satisfies FR-013/SC-008; no gaps
+  found)
+- [X] T058 [P] Verified plan/task alignment: confirmed `tasks.md`'s implemented file set
+  matches `plan.md`'s Project Structure and Technical Context exactly (same dependency
+  versions, same folder layout, no `contracts/` needed as documented, no unplanned
+  deviations)
 
 **Checkpoint**: All spec success criteria (SC-001–SC-008) are demonstrably met from a clean
 checkout using only documented commands.

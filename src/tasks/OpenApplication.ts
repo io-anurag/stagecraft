@@ -3,11 +3,9 @@ import { Navigate } from '@serenity-js/web';
 
 import { env } from '../config/env';
 
-// Business intent: arrive at a fresh instance of the application (FR-004).
-// Navigate.to(env.baseUrl) is used instead of Navigate.to('/') because a root-relative
-// path resolves against the *origin* of the project's baseURL, not its full path —
-// which would drop the '/examples/react/dist/' segment of env.baseUrl entirely.
+/** Navigates to a fresh instance of the application. */
 export const OpenApplication = () =>
     Task.where(`#actor opens the application`,
+        // env.baseUrl (not '/') is used since a root-relative path would drop its path segment.
         Navigate.to(env.baseUrl),
     );

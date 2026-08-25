@@ -5,8 +5,7 @@ const todoItem = (itemName: string) =>
     PageElement.located(By.cssContainingText('li', itemName))
         .describedAs(`the '${itemName}' todo item`);
 
-// Reusable across UI scenarios (FR-006, FR-014): whether a named item is marked complete
-// (a completed item's <li> gets the 'completed' CSS class).
+/** Answers whether the named list item is marked complete. */
 export const ItemCompletionState = (itemName: string) =>
     Question.about(`whether '${itemName}' is complete`, async (actor: AnswersQuestions & UsesAbilities) => {
         const classes = await actor.answer(CssClasses.of(todoItem(itemName)));
