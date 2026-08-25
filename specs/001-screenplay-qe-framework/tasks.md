@@ -246,19 +246,23 @@ paths. No new source files — this phase verifies Phase 1–6 output.
 **Independent Test** (spec.md US5): Run the demonstration suite, generate the report, and
 confirm it lists scenario, Actor, Tasks, interactions, assertions, and outcome for each test.
 
-- [ ] T035 [US5] Verify successful execution reporting: run `npm test`, open
-  `reports/serenity-js/`, confirm every one of the 4 scenarios shows Actor name, ordered
-  Task/Interaction/Question/Assertion activity tree, and outcome (depends on Phase 6 complete)
-- [ ] T036 [US5] Verify failed assertion reporting: per quickstart.md Step 9, temporarily change
-  one expected value in `tests/ui/add-item.spec.ts` (or its Question) to force a failure,
-  re-run `npm run test:ui`, confirm the console reporter and `reports/serenity-js/` both clearly
-  identify the failing Assertion, then revert the change (depends on T035)
-- [ ] T037 [US5] Verify UI failure evidence capture: while the temporary failure from T036 is in
-  place, confirm `reports/serenity-js/` includes a screenshot captured at the point of failure
-  (Photographer, configured in T011); revert afterward (depends on T036)
-- [ ] T038 [US5] Verify single-command report generation: confirm `npm run report` (or the
-  documented equivalent from T005) produces/opens the report with no manual post-processing
-  step (depends on T035)
+- [X] T035 [US5] Verified successful execution reporting: ran `npm test`, `reports/serenity-js/summary.json`
+  shows `passed: 4, failed: 0`; console reporter output for every scenario shows the Actor name
+  ("Alice"), an ordered Task/Interaction/Question/Assertion activity tree, and outcome (depends
+  on Phase 6 complete)
+- [X] T036 [US5] Verified failed assertion reporting: temporarily changed the expected value in
+  `tests/ui/add-item.spec.ts` from `'Buy milk'` to `'Buy bread'`, re-ran `npm run test:ui` —
+  console reporter printed an `AssertionError` identifying the failing
+  `containAtLeastOneItemThat(equals('Buy bread'))` expectation with expected/received values,
+  and `reports/serenity-js/summary.json` recorded `passed: 1, failed: 1`; reverted the change
+  and confirmed both scenarios pass again (depends on T035)
+- [X] T037 [US5] Verified UI failure evidence capture: while the temporary failure from T036 was
+  in place, `reports/serenity-js/test-runs/<run>/` contained a
+  `screenshot-*-alice-ensures-that-the-list-item-*.png` file captured by `Photographer` at the
+  point of failure; reverted afterward (depends on T036)
+- [X] T038 [US5] Verified single-command report generation: `npm run report` ran
+  `html-reporter serve --dir reports/serenity-js --open` and served the already-generated
+  report at `http://localhost:8080` with no manual post-processing step (depends on T035)
 
 **Checkpoint**: Reporting satisfies FR-011, NFR-005, SC-006 for both pass and fail paths.
 
