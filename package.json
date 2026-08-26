@@ -34,7 +34,8 @@
     "@serenity-js/playwright": "3.45.9",
     "@serenity-js/playwright-test": "3.45.9",
     "@serenity-js/rest": "3.45.9",
-    "@serenity-js/web": "3.45.9"
+    "@serenity-js/web": "3.45.9",
+    "dotenv": "^17.4.2"
   },
   "devDependencies": {
     "@types/node": "22.18.10",

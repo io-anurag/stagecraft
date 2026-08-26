@@ -10,6 +10,9 @@ import { env } from './src/config/env';
 const config: PlaywrightTestConfig<SerenityFixtures, SerenityWorkerFixtures> = {
     testDir: './tests',
 
+    // Headed runs launch a visible browser per worker — cap at 1 so only a single window opens.
+    workers: env.headless ? undefined : 1,
+
     reporter: [
         ['@serenity-js/playwright-test', {
             crew: [
@@ -36,7 +39,9 @@ const config: PlaywrightTestConfig<SerenityFixtures, SerenityWorkerFixtures> = {
         {
             name: 'api',
             testDir: './tests/api',
-            use: { baseURL: env.apiBaseUrl },
+            // @serenity-js/playwright-test always launches a worker-scoped browser (even for
+            // API-only actors), but api tests never render it — force headless so no window pops up.
+            use: { baseURL: env.apiBaseUrl, headless: true },
         },
     ],
 };

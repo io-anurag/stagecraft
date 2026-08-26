@@ -1,4 +1,8 @@
+import { config as loadDotenv } from 'dotenv';
+
 import { StageCraftEnv } from './StageCraftEnv';
+
+loadDotenv();
 
 const DEFAULT_BASE_URL = 'https://todomvc.com/examples/react/dist/';
 const DEFAULT_API_BASE_URL = 'https://jsonplaceholder.typicode.com';
