@@ -18,7 +18,7 @@ StageCraft does not reimplement the Screenplay Pattern — it is built directly 
 `Interaction`, and `Question` primitives, plus `@serenity-js/playwright` (browser automation) and
 `@serenity-js/rest` (HTTP API automation) bindings. StageCraft's own code is limited to the
 business-specific Tasks and Questions for its two demonstration scenarios (a TodoMVC UI and the
-JSONPlaceholder REST API) — see [`.specify/memory/constitution.md`](.specify/memory/constitution.md)
+JSONPlaceholder REST API) — see [`specs/001-screenplay-qe-framework/constitution.md`](specs/001-screenplay-qe-framework/constitution.md)
 for the governing principles behind these decisions, in particular Principle I (Screenplay
 Pattern First) and Principle X (Simplicity Before Abstraction).
 
